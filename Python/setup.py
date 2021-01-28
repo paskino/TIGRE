@@ -23,7 +23,7 @@ COMPUTE_CAPABILITY_ARGS = [  # '-gencode=arch=compute_20,code=sm_20', #deprecate
     '-gencode=arch=compute_61,code=sm_61',
     '-gencode=arch=compute_70,code=sm_70',
     '-gencode=arch=compute_75,code=sm_75',
-    '-gencode=arch=compute_86,code=sm_86',
+#    '-gencode=arch=compute_86,code=sm_86',
     '--ptxas-options=-v', '-c',
     '--default-stream=per-thread',
     ]
@@ -360,6 +360,14 @@ AwminTV_ext = Extension('_AwminTV',
                         include_dirs=[NUMPY_INCLUDE, CUDA['include'], 'Source'])
 
 
+if os.environ.get('CONDA_BUILD', None):
+    install_requires = []
+else:
+    install_requires=['Cython',
+                        'matplotlib',
+                        'numpy',
+                        'scipy'],
+
 setup(name='pytigre',
       version='0.1.8',
       author='Reuben Lindroos, Sam Loescher',
@@ -370,10 +378,7 @@ setup(name='pytigre',
       ext_modules=[Ax_ext, Atb_ext, tvdenoising_ext, minTV_ext, AwminTV_ext],
       py_modules=['tigre.py'],
       cmdclass={'build_ext': BuildExtension},
-      install_requires=['Cython',
-                        'matplotlib',
-                        'numpy',
-                        'scipy'],
+      install_requires=install_requires,
       license_file='LICENSE.txt',
       license='BSD 3-Clause',
       # since the package has c code, the egg cannot be zipped

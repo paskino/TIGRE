@@ -1,0 +1,45 @@
+package:
+  name: tigre
+  version: 2.1
+
+build:
+  preserve_egg_dir: False
+  number: 0
+  
+#source:
+#  git_rev: v2.1
+#  git_url: https://github.com/cern/tigre.git
+# patch:
+#    - patch_setup_conda.patch
+# test:
+#   source_files:
+#     - ./test/
+#  requires:
+#    - pillow
+#    - pillow=4.1.1 # [win]
+  # commands:
+  #   - python -c "import os; print (os.getcwd())"
+  #   - python -m unittest discover -s test
+  
+requirements:
+  build:
+    - python
+    - numpy {{ numpy }}
+    - setuptools
+    - cython
+    - ripgrep
+    - matplotlib
+    - scipy
+
+  run:
+    - {{ pin_compatible('numpy', max_pin='x.x') }}
+    - python
+    - numpy
+    - matplotlib
+    - scipy
+    - libgcc-ng # [unix]
+
+about:
+  home: http://www.ccpi.ac.uk
+  license:  BSD license
+  summary: 'CCPi Core Imaging Library Quantification Toolbox'
